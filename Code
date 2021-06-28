@@ -1,0 +1,73 @@
+var age = "N/A";
+var brand = "N/A";
+var color = "N/A";
+var price;
+
+// Checks the age.
+// If user is less than or equal to 16, they can't buy a phone.
+onEvent("dropdownAge", "change", function( ) {
+  age = getNumber("dropdownAge");
+  if (age <= 16) {
+    screenUpdate();
+  } else {
+    textOutput();
+  }
+});
+
+//The user can select either the brand Apple or Samsung. 
+onEvent("dropdownBrand", "change", function( ) {
+  brand = getText("dropdownBrand");
+  if (age <= 16) {
+    screenUpdate();
+  } else {
+    textOutput();
+  }
+});
+
+// The suer can choose a choose a color, but
+// if it's red, they cannot buy the phone.
+onEvent("dropdownColor", "change", function( ) {
+  color = getText("dropdownColor");
+  if (age <= 16) {
+  screenUpdate();
+  } else if ((color != "Red")) {
+  textOutput();
+  } else {
+    setText("infoOutput", "Age: " + age + "\n\nBrand: " + brand + "\n\nColor: " + color + "\n\n Red is too expensive!");
+  }
+});
+
+// Generates price.
+// Any color for Apple besides red is $450.
+// Any color for Samsung besides red is $350.
+onEvent("buttonPrice", "click", function( ) {
+  if (age <= 16) {
+    screenUpdate();
+  } else if ((brand == "Apple" && color != "Red")) {
+  price = "$" + 450;
+  setText("infoOutput", "Age: " + age + "\n\nBrand: " + brand + "\n\nColor: " + color + "\n\nYour grand total: " + price);
+  setImageURL("imageYesOrNo", "Yes.jpg");
+  } else if ((brand == "Samsung" && color != "Red")) {
+  price = "$" + 350;
+  setText("infoOutput", "Age: " + age + "\n\nBrand: " + brand + "\n\nColor: " + color + "\n\nYour grand total: " + price);
+  setImageURL("imageYesOrNo", "Yes.jpg");
+  } else if ((color == "Red")) {
+    setText("infoOutput", "Age: " + age + "\n\nBrand: " + brand + "\n\nColor: " + color + "\n\n Red is too expensive!");
+    setImageURL("imageYesOrNo", "No.jpg");
+  }
+});
+
+//Makes sure that the user can't select a brand or color if 
+// the user is 16 or under.
+function screenUpdate() {
+  if (age <= 16) {
+     setText("infoOutput", "Age: " + age + "\n\nBrand: N/A" + "\n\nColor: N/A" + "\n\nYou need to be older to purchase!");
+  }
+}
+
+// The age, brand , and color is stated.
+function textOutput() {
+  setText("infoOutput", "Age: " + age + "\n\nBrand: " + brand + "\n\nColor: " + color);
+}
+
+
